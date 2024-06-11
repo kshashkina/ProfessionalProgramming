@@ -5,6 +5,7 @@
 #include <string>
 #include <tuple>
 #include <cstdlib>
+#include <print>
 
 // Function to split string by a delimiter
 std::vector<std::string> split(const std::string &str, char delimiter) {
@@ -50,7 +51,7 @@ std::vector<std::tuple<int, int, int>> parseLine(const std::string &line) {
 }
 
 // Function to process the image based on the favorite color
-void processImage(const std::string &inputFileName, const std::tuple<int, int, int> &favoriteColor, const std::string &outputFileName) {
+void processImage(const std::string &inputFileName, const std::tuple<int, int, int> &favoriteColor, const std::string &outputFileName, const std::tuple<int, int, int> &unfavoriteColor = std::make_tuple(-1, -1, -1)) {
     std::ifstream inputFile(inputFileName);
     if (!inputFile.is_open()) {
         throw std::runtime_error("Failed to open input file");
@@ -83,6 +84,9 @@ void processImage(const std::string &inputFileName, const std::tuple<int, int, i
                     image[i-1][j-1] = favoriteColor;
                 }
             }
+            if (image[i][j] == unfavoriteColor) {
+                image[i][j] = favoriteColor;
+            }
         }
     }
 
@@ -104,8 +108,8 @@ void processImage(const std::string &inputFileName, const std::tuple<int, int, i
 }
 
 int main(int argc, char *argv[]) {
-    if (argc != 6) {
-        std::cerr << "Usage: " << argv[0] << " <input file> <R> <G> <B> <output file>\n";
+    if (argc != 6 && argc != 9) {
+        std::println("Usage: {} <input file> <R> <G> <B> <output file> [unfavorite R] [unfavorite G] [unfavorite B]\n", argv[0]);
         return 1;
     }
 
@@ -116,15 +120,29 @@ int main(int argc, char *argv[]) {
     std::string outputFileName = argv[5];
 
     if (!isValidColorValue(r) || !isValidColorValue(g) || !isValidColorValue(b)) {
-        std::cerr << "Error: Invalid favorite color value. Each component must be in the range [0, 255].\n";
+        std::println("Error: Invalid favorite color value. Each component must be in the range [0, 255].\n");
         return 1;
     }
 
+    std::tuple<int, int, int> favoriteColor = std::make_tuple(r, g, b);
+
+    std::tuple<int, int, int> unfavoriteColor = std::make_tuple(-1, -1, -1);
+    if (argc == 9) {
+        int unfavoriteR = std::atoi(argv[6]);
+        int unfavoriteG = std::atoi(argv[7]);
+        int unfavoriteB = std::atoi(argv[8]);
+        if (!isValidColorValue(unfavoriteR) || !isValidColorValue(unfavoriteG) || !isValidColorValue(unfavoriteB)) {
+            std::println("Error: Invalid unfavorite color value. Each component must be in the range [0, 255].\n");
+            return 1;
+        }
+        unfavoriteColor = std::make_tuple(unfavoriteR, unfavoriteG, unfavoriteB);
+    }
+
     try {
-        processImage(inputFileName, std::make_tuple(r, g, b), outputFileName);
-        std::cout << "Image processing complete.\n";
+        processImage(inputFileName, favoriteColor, outputFileName, unfavoriteColor);
+        std::println("Image processing complete.\n");
     } catch (const std::exception &e) {
-        std::cerr << "Error: " << e.what() << "\n";
+        std::println("Error {} \n", e.what());
         return 1;
     }
 

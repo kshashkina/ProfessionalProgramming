@@ -5,6 +5,9 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
+# Set the executable variable
+EXECUTABLE="./main"  # Change to "java Main" for Java program
+
 are_files_identical() {
     local file1="$1"
     local file2="$2"
@@ -16,63 +19,51 @@ are_files_identical() {
     fi
 }
 
-# Test Case 1: Basic Functionality
-echo "Test Case 1: Basic Functionality"
-./main input.txt 0 0 0 output.txt
-# Check if expected output is the same as the actual output
-if are_files_identical "output.txt" "expected_output.txt"; then
-    echo -e "${GREEN}Test Passed: Files are identical.${NC}"
-else
-    echo -e "${RED}Test Failed: Files are different.${NC}"
-fi
-rm output.txt
+check_test_case() {
+    local test_case_desc="$1"
+    local cmd="$2"
+    local expected_file="$3"
+    local actual_file="$4"
 
+    echo "$test_case_desc"
+    eval "$cmd"
+
+    if [ -n "$expected_file" ] && [ -n "$actual_file" ]; then
+        if are_files_identical "$expected_file" "$actual_file"; then
+            echo -e "${GREEN}Test Passed: Files are identical.${NC}"
+        else
+            echo -e "${RED}Test Failed: Files are different.${NC}"
+        fi
+        rm -f "$actual_file"
+    else
+        if [ $? -eq 1 ] && [ ! -f "$actual_file" ]; then
+            echo -e "${GREEN}Test Passed: Program handled the case correctly.${NC}"
+        else
+            echo -e "${RED}Test Failed: Program did not handle the case correctly.${NC}"
+        fi
+    fi
+}
+
+# Test Case 1: Basic Functionality
+check_test_case "Test Case 1: Basic Functionality" "$EXECUTABLE input.txt 0 0 0 output.txt" "expected_output_test1.txt" "output.txt"
 
 # Test Case 2: Input File with Invalid Number of strings
-echo "Test Case 2: Input File with Invalid Number of strings"
-./main input2.txt 0 0 0 output.txt
-# Check if the program exited with an error and output file does not exist
-if [ $? -eq 1 ] && [ ! -f "output.txt" ]; then
-    echo -e "${GREEN}Test Passed: Program threw an exception for invalid input format.${NC}"
-else
-    echo -e "${RED}Test Failed: Either program did not handle invalid input format or output file exists.${NC}"
-fi
+check_test_case "Test Case 2: Input File with Invalid Number of strings" "$EXECUTABLE input2.txt 0 0 0 output.txt" "" "output.txt"
 
 # Test Case 3: Input File with Invalid Pixel Format
-echo "Test Case 3: Input File with Invalid Pixel Format"
-./main input3.txt 0 0 0 output.txt
-# Check if the program exited with an error and output file does not exist
-if [ $? -eq 1 ] && [ ! -f "output.txt" ]; then
-    echo -e "${GREEN}Test Passed: Program threw an exception for invalid input format.${NC}"
-else
-    echo -e "${RED}Test Failed: Either program did not handle invalid input format or output file exists.${NC}"
-fi
+check_test_case "Test Case 3: Input File with Invalid Pixel Format" "$EXECUTABLE input3.txt 0 0 0 output.txt" "" "output.txt"
 
 # Test Case 4: Non-existent Input File
-echo "Test Case 4: Non-existent Input File"
-./main no_input.txt 0 0 0 output.txt
-if [ $? -eq 1 ] && [ ! -f "output.txt" ]; then
-    echo -e "${GREEN}Test Passed: Program threw an exception for invalid input format.${NC}"
-else
-    echo -e "${RED}Test Failed: Either program did not handle invalid input format or output file exists.${NC}"
-fi
+check_test_case "Test Case 4: Non-existent Input File" "$EXECUTABLE no_input.txt 0 0 0 output.txt" "" "output.txt"
 
 # Test Case 5: No Favorite Color in Image
-echo "Test Case 5: No Favorite Color in Image"
-./main input.txt 1 1 1 output.txt
-if are_files_identical "output.txt" "input.txt"; then
-    echo -e "${GREEN}Test Passed: Files are identical.${NC}"
-else
-    echo -e "${RED}Test Failed: Files are different.${NC}"
-fi
-rm output.txt
+check_test_case "Test Case 5: No Favorite Color in Image" "$EXECUTABLE input.txt 1 1 1 output.txt" "input.txt" "output.txt"
 
 # Test Case 6: Invalid RGB Value for Favorite Color
-echo "Test Case 6: Invalid RGB Value for Favorite Color"
-./main input.txt 256 1 1 output.txt
-if [ $? -eq 1 ] && [ ! -f "output.txt" ]; then
-    echo -e "${GREEN}Test Passed: Program threw an exception for invalid RGB value.${NC}"
-else
-    echo -e "${RED}Test Failed: Program did not handle invalid RGB value.${NC}"
-fi
+check_test_case "Test Case 6: Invalid RGB Value for Favorite Color" "$EXECUTABLE input.txt 256 1 1 output.txt" "" "output.txt"
 
+# Test Case 7: Basic Functionality with Unfavorite Color
+check_test_case "Test Case 7: Basic Functionality with Unfavorite Color" "$EXECUTABLE input.txt 0 0 0 output.txt 255 255 255" "expected_output_test7.txt" "output.txt"
+
+# Test Case 8: Invalid RGB Value for Unfavorite Color
+check_test_case "Test Case 8: Invalid RGB Value for Unfavorite Color" "$EXECUTABLE input.txt 0 0 0 output.txt 256 256 256" "" "output.txt"

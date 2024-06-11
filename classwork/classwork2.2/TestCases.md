@@ -1,67 +1,121 @@
 ### Test Case 1: Basic Functionality
 
-#### Steps:
-1. **Input Preparation:** Choose an input file `input1.txt` with a 16x16 grid of pixels. Each pixel is represented as `R,G,B`.
-2. **Favorite Color:** Choose a favorite color `(100, 150, 200)`.
-3. **Output File:** Set the output file name to `output1.txt`.
-4. **Run the Program:** Execute the program with the specified input and output file names and favorite color.
-5. **Verify Output:** Check `output1.txt` to ensure pixels adjacent to favorite color pixels are updated correctly.
-
-**Expected Outcome:** The output file should have the correct pixels updated based on the favorite color logic.
-
-### Test Case 2: Input File with Invalid Number of strings
+#### Precondition:
+Choose an input file `input.txt` with a 16x16 grid of pixels. Each pixel is represented as `R,G,B`.
 
 #### Steps:
-1. **Input Preparation:** Choose an input file `input2.txt` with invalid number of strings.
-2. **Favorite Color:** Choose a favorite color `(50, 50, 50)`.
-3. **Output File:** Set the output file name to `output2.txt`.
-4. **Run the Program:** Execute the program with the specified input and output file names and favorite color.
-5. **Verify Output:** Check the program's error handling for invalid input format.
+1. **Step 1:** Set favorite color to `(0, 0, 0)`.
+    - **Expected Result:** Favorite color is set correctly in the program.
+2. **Step 2:** Set the output file name to `output.txt`.
+    - **Expected Result:** Output file name is set correctly in the program.
+3. **Step 3:** Execute the program with the specified input and output file names and favorite color.
+    - **Expected Result:** Program runs successfully without errors.
+4. **Step 4:** Check `output.txt` to ensure pixels adjacent to favorite color pixels are updated correctly.
+    - **Expected Result:** The output file has the correct pixels updated based on the favorite color logic.
 
-**Expected Outcome:** The program should throw an exception and print an error message. Output file does not exist.
+### Test Case 2: Input File with Invalid Number of Strings
+
+#### Precondition:
+Choose an input file `input2.txt` with an invalid number of strings.
+
+#### Steps:
+1. **Step 1:** Set favorite color to `(0, 0, 0)`.
+    - **Expected Result:** Favorite color is set correctly in the program.
+2. **Step 2:** Set the output file name to `output.txt`.
+    - **Expected Result:** Output file name is set correctly in the program.
+3. **Step 3:** Execute the program with the specified input and output file names and favorite color.
+    - **Expected Result:** Program throws an exception and prints an error message.
+4. **Step 4:** Check if the output file `output.txt` exists.
+    - **Expected Result:** Output file does not exist.
 
 ### Test Case 3: Input File with Invalid Pixel Format
 
-#### Steps:
-1. **Input Preparation:** Choose an input file `input2.txt` with invalid pixel format.
-2. **Favorite Color:** Choose a favorite color `(50, 50, 50)`.
-3. **Output File:** Set the output file name to `output3.txt`.
-4. **Run the Program:** Execute the program with the specified input and output file names and favorite color.
-5. **Verify Output:** Check the program's error handling for invalid input format.
+#### Precondition:
+Choose an input file `input3.txt` with an invalid pixel format.
 
-**Expected Outcome:** The program should throw an exception and print an error message. Output file does not exist.
+#### Steps:
+1. **Step 1:** Set favorite color to `(0, 0, 0)`.
+    - **Expected Result:** Favorite color is set correctly in the program.
+2. **Step 2:** Set the output file name to `output.txt`.
+    - **Expected Result:** Output file name is set correctly in the program.
+3. **Step 3:** Execute the program with the specified input and output file names and favorite color.
+    - **Expected Result:** Program throws an exception and prints an error message.
+4. **Step 4:** Check if the output file `output.txt` exists.
+    - **Expected Result:** Output file does not exist.
 
 ### Test Case 4: Non-existent Input File
 
+#### Precondition:
+Choose a non-existing input file `no_input.txt`.
+
 #### Steps:
-1. **Input Preparation:** Choose non-existing input file `input4.txt`.
-2. **Favorite Color:** Choose a favorite color `(0, 0, 0)`.
-3. **Output File:** Set the output file name to `output4.txt`.
-4. **Run the Program:** Execute the program with the specified input and output file names and favorite color.
-5. **Verify Output:** Check the program's error handling for a non-existent input file.
-
-**Expected Outcome:** The program should throw an exception and print an error message indicating that the input file could not be opened. Output file does not exist.
-
+1. **Step 1:** Set favorite color to `(0, 0, 0)`.
+    - **Expected Result:** Favorite color is set correctly in the program.
+2. **Step 2:** Set the output file name to `output.txt`.
+    - **Expected Result:** Output file name is set correctly in the program.
+3. **Step 3:** Execute the program with the specified input and output file names and favorite color.
+    - **Expected Result:** Program throws an exception and prints an error message indicating that the input file could not be opened.
+4. **Step 4:** Check if the output file `output.txt` exists.
+    - **Expected Result:** Output file does not exist.
 
 ### Test Case 5: No Favorite Color in Image
 
-#### Steps:
-1. **Input Preparation:** Choose an input file `input5.txt` with a 16x16 grid of pixels where the favorite color `(1, 1, 1)` does not appear at all.
-2. **Favorite Color:** Choose a favorite color `(1, 1, 1)`.
-3. **Output File:** Set the output file name to `output5.txt`.
-4. **Run the Program:** Execute the program with the specified input and output file names and favorite color.
-5. **Verify Output:** Check `output5.txt` to ensure no pixels are updated since the favorite color is not present.
+#### Precondition:
+Choose an input file `input.txt` with a 16x16 grid of pixels where the favorite color `(1, 1, 1)` does not appear at all.
 
-**Expected Outcome:** The output file should be identical to the input file, with no changes made.
+#### Steps:
+1. **Step 1:** Set favorite color to `(1, 1, 1)`.
+    - **Expected Result:** Favorite color is set correctly in the program.
+2. **Step 2:** Set the output file name to `output.txt`.
+    - **Expected Result:** Output file name is set correctly in the program.
+3. **Step 3:** Execute the program with the specified input and output file names and favorite color.
+    - **Expected Result:** Program runs successfully without errors.
+4. **Step 4:** Check `output.txt` to ensure no pixels are updated since the favorite color is not present.
+    - **Expected Result:** The output file is identical to the input file, with no changes made.
 
 ### Test Case 6: Invalid RGB Value for Favorite Color
 
+#### Precondition:
+Choose an input file `input.txt` with a 16x16 grid of pixels.
+
 #### Steps:
-1. **Input Preparation:** Choose an input file `input6.txt` with a 16x16 grid of pixels.
-2. **Favorite Color:** Choose an invalid favorite color `(256, 100, 100)`.
-3. **Output File:** Set the output file name to `output6.txt`.
-4. **Run the Program:** Execute the program with the specified input and output file names and favorite color.
-5. **Verify Output:** Check the program's error handling for an invalid favorite color value.
+1. **Step 1:** Set an invalid favorite color `(256, 100, 100)`.
+    - **Expected Result:** Program validates the favorite color and prints an error message.
+2. **Step 2:** Set the output file name to `output.txt`.
+    - **Expected Result:** Output file name is set correctly in the program.
+3. **Step 3:** Execute the program with the specified input and output file names and favorite color.
+    - **Expected Result:** Program does not process the image and prints an error message.
+4. **Step 4:** Check if the output file `output.txt` exists.
+    - **Expected Result:** Output file does not exist.
 
-**Expected Outcome:** The program should validate the favorite color and print an error message without processing the image. Output file does not exist.
+Here are additional test cases to test the functionality correlated with the unfavorite color:
 
+### Test Case 7: Basic Functionality with Unfavorite Color
+
+#### Precondition:
+Choose an input file `input.txt` with a 16x16 grid of pixels. Each pixel is represented as `R,G,B`.
+
+#### Steps:
+1. **Step 1:** Set favorite color to `(0, 0, 0)` and unfavorite color to `(255, 255, 255)`.
+   - **Expected Result:** Favorite and unfavorite colors are set correctly in the program.
+2. **Step 2:** Set the output file name to `output.txt`.
+   - **Expected Result:** Output file name is set correctly in the program.
+3. **Step 3:** Execute the program with the specified input and output file names, favorite color, and unfavorite color.
+   - **Expected Result:** Program runs successfully without errors.
+4. **Step 4:** Check `output.txt` to ensure pixels that were the unfavorite color are updated to the favorite color.
+   - **Expected Result:** The output file has the correct pixels updated based on the favorite and unfavorite color logic.
+
+### Test Case 8: Invalid RGB Value for Unfavorite Color
+
+#### Precondition:
+Choose an input file `input.txt` with a 16x16 grid of pixels.
+
+#### Steps:
+1. **Step 1:** Set favorite color to `(0, 0, 0)` and an invalid unfavorite color `(256, 255, 255)`.
+   - **Expected Result:** Program validates the unfavorite color and prints an error message.
+2. **Step 2:** Set the output file name to `output.txt`.
+   - **Expected Result:** Output file name is set correctly in the program.
+3. **Step 3:** Execute the program with the specified input and output file names, favorite color, and unfavorite color.
+   - **Expected Result:** Program does not process the image and prints an error message.
+4. **Step 4:** Check if the output file `output.txt` exists.
+   - **Expected Result:** Output file does not exist.
