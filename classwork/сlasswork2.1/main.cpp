@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <print>
+#include <format>
 
 class UserStatistics {
 public:
@@ -23,10 +24,10 @@ public:
 
         if (userStats.find(name) == userStats.end()) {
             userStats[name] = 1;
-            return "Welcome, " + name + "!";
+            return std::format("Welcome, {}!", name);
         } else {
             int count = ++userStats[name];
-            return "Hello again(" + std::to_string(count) + "), " + name + "!";
+            return std::format("Hello again({}), {}!", count, name);
         }
     }
 
@@ -34,9 +35,9 @@ public:
         auto it = userStats.find(name);
         if (it != userStats.end()) {
             userStats.erase(it);
-            return "Statistics for " + name + " have been reset.";
+            return std::format("Statistics for {} have been reset.", name);
         } else {
-            return "No statistics to reset for " + name + ".";
+            return std::format("No statistics to reset for {}.", name);
         }
     }
 private:
@@ -58,8 +59,8 @@ private:
     void saveToFile() {
         std::ofstream file(fileName);
         if (file.is_open()) {
-            for (const auto& entry : userStats) {
-                file << entry.first << " " << entry.second << "\n";
+            for (const auto& [name, count] : userStats) {
+                std::println(file, "{} {}", name, count);
             }
             file.close();
         }
@@ -70,20 +71,24 @@ private:
 int main(int argc, char* argv[]) {
     UserStatistics stats;
 
-    if (argc < 2) {
-        std::println("Error: Please provide a name as an argument.");
+    if (argc < 2 || argc > 3) {
+        std::cerr << "Error: Invalid number of arguments." << std::endl;
         return 1;
     }
 
     std::string name = argv[1];
+    bool isDeleteCmd = (argc == 3);
+    std::string additionalCmd = isDeleteCmd ? argv[2] : "";
 
-    if (argc == 2) {
-        std::println("{}", stats.greetUser(name));
-    } else if (argc == 3 && std::string(argv[2]) == "delete") {
-        std::println("{}", stats.resetUser(name));
-    } else {
-        std::println("Error: Invalid arguments.");
+    if (isDeleteCmd && additionalCmd != "delete") {
+        std::cerr << "Error: Invalid command." << std::endl;
         return 1;
+    }
+
+    if (!isDeleteCmd) {
+        std::println("{}", stats.greetUser(name));
+    } else {
+        std::println("{}", stats.resetUser(name));
     }
     return 0;
 }

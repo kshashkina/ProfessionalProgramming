@@ -1,69 +1,59 @@
 ### Test Case 1: First Time Run with a New Name
 
-**Steps:**
-1. Ensure there is no pre-existing history for the name "Alice".
-2. Run the program with the argument "Alice".
-3. Verify that the output is "Welcome, Alice!".
-4. Check the history to confirm that "Alice" is recorded with one run.
+**Precondition:**
+- Ensure there is no pre-existing history for the name "Alice".
 
-**Expected Result:**
-- First run should display "Welcome, Alice!".
+**Steps and Expected Results:**
+1. **Step:** Run the program with the argument "Alice" using `./hello Alice`.
+    - **Expected Result:** Program output "Welcome, Alice!".
+2. **Step:** Check the history for the name "Alice".
+    - **Expected Result:** "Alice" is recorded with one run.
 
 ### Test Case 2: Multiple Runs with the Same Name
 
-**Steps:**
-1. Ensure there is no pre-existing history for the name "Bob".
-2. Run the program with the argument "Bob".
-3. Verify that the output is "Welcome, Bob!".
-4. Run the program again with the argument "Bob".
-5. Verify that the output is "Hello again(2), Bob".
-6. Run the program a third time with the argument "Bob".
-7. Verify that the output is "Hello again(3), Bob".
+**Precondition:**
+- Ensure there is no pre-existing history for the name "Bob".
 
-**Expected Result:**
-- First run should display "Welcome, Bob!".
-- Second run should display "Hello again(2), Bob".
-- Third run should display "Hello again(3), Bob".
+**Steps and Expected Results:**
+1. **Step:** Run the program with the argument "Bob" using `./hello Bob`.
+    - **Expected Result:** Program output "Welcome, Bob!".
+2. **Step:** Run the program again with the argument "Bob" using `./hello Bob`.
+    - **Expected Result:** Program output "Hello again(2), Bob".
+3. **Step:** Run the program a third time with the argument "Bob" using `./hello Bob`.
+    - **Expected Result:** Program output "Hello again(3), Bob".
 
 ### Test Case 3: Reset Statistics for a Given Name
 
-**Steps:**
-1. Ensure there is a pre-existing history for the name "Charlie" with at least two runs.
-2. Run the program with the arguments "Charlie" and "delete".
-3. Verify that the output confirms the reset.
-4. Run the program again with the argument "Charlie".
-5. Verify that the output is "Welcome, Charlie!".
-6. Check the history to confirm that "Charlie" is recorded with one run after the reset.
+**Precondition:**
+- Ensure there is a pre-existing history for the name "Charlie" with at least two runs.
 
-**Expected Result:**
-- Reset operation should be acknowledged.
-- First run after reset should display "Welcome, Charlie!".
+**Steps and Expected Results:**
+1. **Step:** Run the program with the arguments "Charlie" and "delete" using `./hello Charlie delete`.
+    - **Expected Result:** Program output confirms the reset.
+2. **Step:** Run the program again with the argument "Charlie" using `./hello Charlie`.
+    - **Expected Result:** Program output "Welcome, Charlie!".
+3. **Step:** Check the history for the name "Charlie".
+    - **Expected Result:** "Charlie" is recorded with one run after the reset.
 
 ### Test Case 4: Use of Secret Word "bread" to Clear All History
 
-**Steps:**
-1. Ensure there is a pre-existing history for the names "Dave" and "Eve" with at least one run each.
-2. Run the program with the argument "bread".
-3. Verify that the output confirms the extermination of the history (exact message depends on implementation).
-4. Run the program again with the argument "Dave".
-5. Verify that the output is "Welcome, Dave!".
-6. Run the program again with the argument "Eve".
-7. Verify that the output is "Welcome, Eve!".
+**Precondition:**
+- Ensure there is a pre-existing history for the names "Dave" and "Eve" with at least one run each.
 
-**Expected Result:**
-- History should be cleared for all names after running with "bread".
-- First runs after extermination should display "Welcome, *name* !".
+**Steps and Expected Results:**
+1. **Step:** Run the program with the argument "bread" using `./hello bread`.
+    - **Expected Result:** Program output confirms the extermination of the history (exact message depends on implementation).
+2. **Step:** Run the program again with the argument "Dave" using `./hello Dave`.
+    - **Expected Result:** Program output "Welcome, Dave!".
+3. **Step:** Run the program again with the argument "Eve" using `./hello Eve`.
+    - **Expected Result:** Program output "Welcome, Eve!".
 
 ### Test Case 5: Invalid Input Handling
 
-**Steps:**
-1. Run the program without any arguments.
-2. Verify that the output is an error message indicating the need for a name argument.
-3. Run the program with more than two arguments (e.g., "Frank extra_arg").
-4. Verify that the output is an error message indicating invalid input.
-5. Run the program with valid arguments to ensure normal functionality is not affected (e.g., "Frank").
-6. Verify that the output is "Welcome, Frank!" if it's the first run, or "Hello again(*N*), Frank" otherwise.
-
-**Expected Result:**
-- Program should display an error message for missing or too many arguments.
-- Program should function normally with valid input.
+**Steps and Expected Results:**
+1. **Step:** Run the program without any arguments using `./hello`.
+    - **Expected Result:** Program output an error message indicating the need for a name argument.
+2. **Step:** Run the program with more than two arguments (e.g., `./hello Frank extra_arg`).
+    - **Expected Result:** Program output an error message indicating invalid input.
+3. **Step:** Run the program with valid arguments to ensure normal functionality is not affected (e.g., `./hello Frank`).
+    - **Expected Result:** Program output "Welcome, Frank!" if it's the first run, or "Hello again(*N*), Frank" otherwise.
