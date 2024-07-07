@@ -2,42 +2,56 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-class UserStatistics {
+public class UserStatistics {
+    private static final String DEFAULT_FILE_NAME = "user_stats.txt";
+    private static final String RESET_COMMAND = "bread";
+    public static final String DELETE_COMMAND = "delete";
+
     private Map<String, Integer> userStats;
-    private final String fileName = "user_stats.txt";
+    private String fileName;
+
+    public UserStatistics(String statisticsFilePath) {
+        this.fileName = statisticsFilePath;
+        this.userStats = new HashMap<>();
+        loadFromFile();
+    }
 
     public UserStatistics() {
-        userStats = new HashMap<>();
-        loadFromFile();
+            this(DEFAULT_FILE_NAME);
     }
 
     public void close() {
         saveToFile();
     }
 
-    public String greetUser(String name) {
-        if (name.equals("bread")) {
+    public boolean incrementCounterForUser(String name, StringBuilder message) {
+        if (name.equals(RESET_COMMAND)) {
             userStats.clear();
             saveToFile();
-            return "All history has been exterminated.";
+            message.append("All history has been exterminated.");
+            return true;
         }
 
         if (!userStats.containsKey(name)) {
             userStats.put(name, 1);
-            return "Welcome, " + name + "!";
+            message.append(String.format("Welcome, %s!", name));
+            return true;
         } else {
             int count = userStats.get(name) + 1;
             userStats.put(name, count);
-            return "Hello again(" + count + "), " + name + "!";
+            message.append(String.format("Hello again(%d), %s!", count, name));
+            return true;
         }
     }
 
-    public String resetUser(String name) {
+    public boolean resetUser(String name, StringBuilder message) {
         if (userStats.containsKey(name)) {
             userStats.remove(name);
-            return "Statistics for " + name + " have been reset.";
+            message.append(String.format("Statistics for %s have been reset.", name));
+            return true;
         } else {
-            return "No statistics to reset for " + name + ".";
+            message.append(String.format("No statistics to reset for %s.", name));
+            return false;
         }
     }
 

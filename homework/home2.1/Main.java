@@ -1,26 +1,27 @@
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
-        UserStatistics stats = new UserStatistics();
-        try {
-            if (args.length < 1) {
-                System.out.println("Error: Please provide a name as an argument.");
-                System.exit(1);
-            }
-
-            String name = args[0];
-
-            if (args.length == 1) {
-                System.out.println(stats.greetUser(name));
-            } else if (args.length == 2 && args[1].equals("delete")) {
-                System.out.println(stats.resetUser(name));
-            } else {
-                System.out.println("Error: Invalid arguments.");
-                System.exit(1);
-            }
-        } finally {
-            stats.close();
+        if (args.length < 1 || args.length > 2) {
+            System.err.println("Error: Invalid number of arguments.");
+            System.exit(1);
         }
+
+        UserStatistics stats = new UserStatistics();
+
+        String name = args[0];
+        boolean isDeleteCmd = (args.length == 2);
+        String additionalCmd = isDeleteCmd ? args[1] : "";
+
+        if (isDeleteCmd && !additionalCmd.equals(UserStatistics.DELETE_COMMAND)) {
+            System.err.println("Error: Invalid command.");
+            System.exit(1);
+        }
+
+        StringBuilder message = new StringBuilder();
+        if (!isDeleteCmd) {
+            stats.incrementCounterForUser(name, message);
+        } else {
+            stats.resetUser(name, message);
+        }
+        System.out.println(message.toString());
     }
 }
