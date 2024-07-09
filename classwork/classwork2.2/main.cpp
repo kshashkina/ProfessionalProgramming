@@ -7,6 +7,9 @@
 #include <stdexcept>
 #include <print>
 #include <optional>
+#include <format>
+#include <ranges>
+#include <algorithm>
 
 // Class to represent RGB color
 class Color {
@@ -88,14 +91,17 @@ public:
             throw std::runtime_error("Failed to open output file");
         }
 
-        for (const auto &row : pixels) {
-            for (size_t j = 0; j < row.size(); ++j) {
-                outputFile << std::get<0>(row[j]) << "," << std::get<1>(row[j]) << "," << std::get<2>(row[j]);
-                if (j < row.size() - 1) {
-                    outputFile << " ";
-                }
+        for (const auto& row : pixels) {
+            auto transformed_row = row
+                                   | std::views::transform([](const auto& pixel) {
+                return std::format("{},{},{}", std::get<0>(pixel), std::get<1>(pixel), std::get<2>(pixel));
+            })
+                                   | std::views::join_with(' ');
+
+            for (const auto& value : transformed_row) {
+                outputFile << value;
             }
-            outputFile << "\n";
+            outputFile << '\n';
         }
         outputFile.close();
     }
