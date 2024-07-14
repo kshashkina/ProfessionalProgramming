@@ -9,6 +9,7 @@
 #include <random>
 #include <typeindex>
 #include <atomic>
+#include <print>
 
 struct GreenMessage {
     std::string text;
