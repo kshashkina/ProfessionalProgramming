@@ -2,27 +2,8 @@
 #include <vector>
 #include <algorithm>
 #include <print>
+#include "Rectangle.h"
 
-class Rectangle {
-private:
-    double width;
-    double height;
-
-public:
-    Rectangle(double w, double h) : width(w), height(h) {}
-
-    double getArea() const {
-        return width * height;
-    }
-
-    bool canBePlacedInside(const Rectangle& other) const {
-        return (width <= other.width && height <= other.height);
-    }
-
-    double getBiggerSide() const {
-        return std::max(width, height);
-    }
-};
 
 int main() {
     std::vector<Rectangle> rectangles;
