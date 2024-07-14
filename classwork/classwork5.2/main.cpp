@@ -3,6 +3,7 @@
 #include <thread>
 #include <cassert>
 #include <mutex>
+#include <print>
 
 std::mutex io_mutex;
 
