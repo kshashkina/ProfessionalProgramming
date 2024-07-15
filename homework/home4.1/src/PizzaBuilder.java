@@ -1,6 +1,6 @@
-// PizzaBuilder interface to construct pizzas
+import java.util.List;
+
 public interface PizzaBuilder {
     void addIngredient(Ingredient ingredient);
-    double getTotalCost();
-    void displayPizza();
+    Pizza buildPizza();
 }

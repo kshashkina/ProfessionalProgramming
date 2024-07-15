@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Main {
+    private static final String DONE_COMMAND = "done";
 
     // Read ingredients from file
     private static Map<String, Double> readIngredients(String filename) throws FileNotFoundException {
@@ -97,12 +98,12 @@ public class Main {
         ingredientCosts.forEach((name, cost) -> System.out.printf("- %s ($%.2f)%n", name, cost));
 
         System.out.println("Start composing your pizza! Enter ingredients one by one.");
-        System.out.println("Enter 'done' when finished.");
+        System.out.println("Enter '" + DONE_COMMAND + "' when finished.");
 
         while (true) {
             String input = scanner.nextLine().trim();
 
-            if ("done".equalsIgnoreCase(input)) {
+            if (DONE_COMMAND.equalsIgnoreCase(input)) {
                 break;
             }
 
@@ -114,7 +115,8 @@ public class Main {
             }
         }
 
-        director.displayPizza();
+        Pizza pizza = director.constructPizza();
+        pizza.displayPizza();
     }
 
     // Choose a default pizza option from the list
@@ -164,6 +166,7 @@ public class Main {
             }
         }
 
-        director.displayPizza();
+        Pizza pizza = director.constructPizza();
+        pizza.displayPizza();
     }
 }

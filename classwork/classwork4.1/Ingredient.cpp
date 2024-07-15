@@ -1,9 +1,6 @@
 #pragma once
 
-
-#include <vector>
 #include <string>
-#include <memory>
 
 // Ingredient class to represent each ingredient
 class Ingredient {

@@ -1,7 +1,9 @@
 #pragma once
 
-
+#include <vector>
+#include <memory>
 #include "Ingredient.cpp"
+#include "Pizza.cpp"
 
 // Abstract PizzaBuilder class to construct pizzas
 class PizzaBuilder {
@@ -15,6 +17,5 @@ public:
         selectedIngredients.push_back(ingredient);
     }
 
-    virtual double getTotalCost() const = 0;
-    virtual void displayPizza() const = 0;
+    virtual std::unique_ptr<Pizza> buildPizza() = 0;
 };

@@ -56,9 +56,10 @@ int main() {
         }
     }
 
-    // Display the pizza ingredients and total cost using the director
+    // Construct and display the pizza using the director
+    std::unique_ptr<Pizza> pizza = director.constructPizza();
     std::println("");
-    director.displayPizza();
+    pizza->displayPizza();
 
     return 0;
 }

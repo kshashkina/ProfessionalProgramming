@@ -1,9 +1,8 @@
 #pragma once
 
+#include <memory>
+#include "PizzaBuilder.cpp"
 
-#include "CustomPizzaBuilder.cpp"
-
-// Director class to construct pizzas using a builder
 class PizzaDirector {
 private:
     std::unique_ptr<PizzaBuilder> builder;
@@ -15,11 +14,7 @@ public:
         builder->addIngredient(ingredient);
     }
 
-    double getPizzaCost() const {
-        return builder->getTotalCost();
-    }
-
-    void displayPizza() const {
-        builder->displayPizza();
+    std::unique_ptr<Pizza> constructPizza() {
+        return builder->buildPizza();
     }
 };
