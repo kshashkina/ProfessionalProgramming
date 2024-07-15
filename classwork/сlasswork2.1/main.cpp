@@ -22,36 +22,30 @@ public:
         saveToFile();
     }
 
-    bool incrementCounterForUser(const std::string& name, std::string& message) {
-        if (name == RESET_COMMAND) {
-            userStats.clear();
-            saveToFile();
-            message = "All history has been exterminated.";
-            return true;
-        }
-
+    int incrementCounterForUser(const std::string& name) {
         if (userStats.find(name) == userStats.end()) {
             userStats[name] = 1;
-            message = std::format("Welcome, {}!", name);
-            return true;
+            return 1;
         } else {
-            int count = ++userStats[name];
-            message = std::format("Hello again({}), {}!", count, name);
-            return true;
+            return ++userStats[name];
         }
     }
 
-    bool resetUser(const std::string& name, std::string& message) {
+    bool resetUser(const std::string& name) {
         auto it = userStats.find(name);
         if (it != userStats.end()) {
             userStats.erase(it);
-            message = std::format("Statistics for {} have been reset.", name);
             return true;
         } else {
-            message = std::format("No statistics to reset for {}.", name);
             return false;
         }
     }
+
+    void resetAllUsers() {
+        userStats.clear();
+        saveToFile();
+    }
+
 private:
     std::unordered_map<std::string, int> userStats;
     std::string fileName;
@@ -97,12 +91,25 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    std::string message;
-    if (!isDeleteCmd) {
-        stats.incrementCounterForUser(name, message);
+    if (name == RESET_COMMAND) {
+        stats.resetAllUsers();
+        std::println("All history has been exterminated.");
     } else {
-        stats.resetUser(name, message);
+        if (!isDeleteCmd) {
+            int count = stats.incrementCounterForUser(name);
+            if (count == 1) {
+                std::println("Welcome, {}!", name);
+            } else {
+                std::println("Hello again({}), {}!", count, name);
+            }
+        } else {
+            if (stats.resetUser(name)) {
+                std::println("Statistics for {} have been reset.", name);
+            } else {
+                std::println("No statistics to reset for {}.", name);
+            }
+        }
     }
-    std::println("{}", message);
+
     return 0;
 }

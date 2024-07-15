@@ -4,8 +4,8 @@ import java.util.Map;
 
 public class UserStatistics {
     private static final String DEFAULT_FILE_NAME = "user_stats.txt";
-    private static final String RESET_COMMAND = "bread";
     public static final String DELETE_COMMAND = "delete";
+    public static final String RESET_COMMAND = "bread";
 
     private Map<String, Integer> userStats;
     private String fileName;
@@ -17,42 +17,39 @@ public class UserStatistics {
     }
 
     public UserStatistics() {
-            this(DEFAULT_FILE_NAME);
+        this(DEFAULT_FILE_NAME);
     }
 
     public void close() {
         saveToFile();
     }
 
-    public boolean incrementCounterForUser(String name, StringBuilder message) {
-        if (name.equals(RESET_COMMAND)) {
-            userStats.clear();
-            saveToFile();
-            message.append("All history has been exterminated.");
-            return true;
+    public void incrementCounterForUser(String name) {
+        if (RESET_COMMAND.equals(name)) {
+            clearAllUsers();
+            return;
         }
 
-        if (!userStats.containsKey(name)) {
-            userStats.put(name, 1);
-            message.append(String.format("Welcome, %s!", name));
+        int count = userStats.getOrDefault(name, 0) + 1;
+        userStats.put(name, count);
+    }
+
+    public boolean resetUser(String name) {
+        if (userStats.containsKey(name)) {
+            userStats.remove(name);
             return true;
         } else {
-            int count = userStats.get(name) + 1;
-            userStats.put(name, count);
-            message.append(String.format("Hello again(%d), %s!", count, name));
-            return true;
+            return false;
         }
     }
 
-    public boolean resetUser(String name, StringBuilder message) {
-        if (userStats.containsKey(name)) {
-            userStats.remove(name);
-            message.append(String.format("Statistics for %s have been reset.", name));
-            return true;
-        } else {
-            message.append(String.format("No statistics to reset for %s.", name));
-            return false;
-        }
+    public void clearAllUsers() {
+        userStats.clear();
+        saveToFile();
+    }
+
+    public int getUserCount(String name) {
+        return userStats.getOrDefault(name, 0);
     }
 
     private void loadFromFile() {
