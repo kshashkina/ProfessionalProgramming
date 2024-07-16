@@ -1,0 +1,15 @@
+Cheese 2.50
+Pepperoni 3.00
+Mushrooms 1.75
+Onions 1.50
+GreenPeppers 1.25
+Sausage 3.50
+Bacon 2.75
+Ham 2.50
+Pineapple 1.75
+BlackOlives 1.50
+Tomato 1.25
+Spinach 1.75
+Jalapenos 1.50
+Anchovies 3.00
+BellPeppers 1.25

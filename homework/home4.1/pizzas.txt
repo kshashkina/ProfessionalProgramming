@@ -1,0 +1,6 @@
+Margherita Cheese 2.50 Tomato 1.25
+Pepperoni Cheese 2.50 Pepperoni 3.00
+Vegetarian Cheese 2.50 Tomato 1.25 BellPeppers 1.25 BlackOlives 1.50 Mushrooms 1.75 Onions 1.50
+Hawaiian Cheese 2.50 Ham 2.50 Pineapple 1.75
+MeatLovers Cheese 2.50 Pepperoni 3.00 Sausage 3.50 Bacon 2.75
+SpicyJalapeno Cheese 2.50 Jalapenos 1.50 Pepperoni 3.00
